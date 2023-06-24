@@ -8,13 +8,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Tasks> tasks = [Tasks('bboob', 'des', 2)];
+  TextEditingController title = TextEditingController();
+  TextEditingController des = TextEditingController();
+  TextEditingController days = TextEditingController();
+
+
+  List<Tasks> tasks = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task Management'),
+        title: const Text('Task Management'),
         centerTitle: true,
       ),
       body: ListView.builder(
@@ -29,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           showdiolog();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -39,14 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Add Task'),
+            title: const Text('Add Task'),
             content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: TextField(
+                    controller: title,
                     decoration: InputDecoration(
-                      label: Text('Title'),
+                      label: const Text('Title'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       )
@@ -57,8 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: TextField(
+                    controller: des,
                     decoration: InputDecoration(
-                        label: Text('Description'),
+                        label: const Text('Description'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         )
@@ -69,8 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: TextField(
+                    controller: days,
                     decoration: InputDecoration(
-                        label: Text('Days Required'),
+                        label: const Text('Days Required'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         )
@@ -82,13 +91,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
               ],
             ),
+            actions: [
+              TextButton(onPressed: (){
+                if(title.text.trim().isNotEmpty && des.text.trim().isNotEmpty && days.text.trim().isNotEmpty){
+                  tasks.add(Tasks(title.text.trim(), des.text.trim(),days.text.trim()));
+                  setState(() {
+                  });
+                  title.clear();
+                  des.clear();
+                  days.clear();
+                  Navigator.pop(context);
+                }
+              }, child: const Text('Save'))
+            ],
           );
         });
   }
 }
 
 class Tasks {
-  String title, des;
-  int days;
+  String title, des,days;
   Tasks(this.title, this.des, this.days);
 }
