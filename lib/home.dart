@@ -26,6 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: tasks.length,
           itemBuilder: (context, index) {
             return ListTile(
+              onLongPress: (){
+                bottomdiolog(index);
+              },
               title: Text(tasks[index].title),
               subtitle: Text(tasks[index].des),
             );
@@ -106,6 +109,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         });
+  }
+
+  void bottomdiolog(int index){
+    showModalBottomSheet(context: context, builder: (context){
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Task Details',style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),),
+          Text('Title: ${tasks[index].title}',textAlign: TextAlign.left,),
+          Text('Description: ${tasks[index].des}'),
+          Text('Days Required: ${tasks[index].days}'),
+          ElevatedButton(onPressed: (){
+            tasks.removeAt(index);
+            if(mounted){
+              setState(() {
+
+              });
+            }
+          }, child: Text('Delete'))
+        ],
+      );
+    });
   }
 }
 
