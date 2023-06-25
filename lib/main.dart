@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Task Management',
       home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

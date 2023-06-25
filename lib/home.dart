@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TextField(
                     controller: des,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 40),
                         label: const Text('Description'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -81,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: TextField(
                     controller: days,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         label: const Text('Days Required'),
                         border: OutlineInputBorder(
@@ -113,26 +115,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void bottomdiolog(int index){
     showModalBottomSheet(context: context, builder: (context){
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Task Details',style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-          ),),
-          Text('Title: ${tasks[index].title}',textAlign: TextAlign.left,),
-          Text('Description: ${tasks[index].des}'),
-          Text('Days Required: ${tasks[index].days}'),
-          ElevatedButton(onPressed: (){
-            tasks.removeAt(index);
-            if(mounted){
-              setState(() {
-
-              });
-            }
-          }, child: Text('Delete'))
-        ],
+      return Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Task Details',style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold
+            ),),
+            Text('Title: ${tasks[index].title}',style: const TextStyle(fontSize: 16),),
+            Text('Description: ${tasks[index].des}',style: const TextStyle(fontSize: 16),),
+            Text('Days Required: ${tasks[index].days}',style: const TextStyle(fontSize: 16),),
+            ElevatedButton(onPressed: (){
+              tasks.removeAt(index);
+              Navigator.pop(context);
+              if(mounted){
+                setState(() {
+                });
+              }
+            }, child: const Text('Delete'))
+          ],
+        ),
       );
     });
   }
